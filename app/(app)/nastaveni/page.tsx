@@ -1,13 +1,10 @@
 'use client'
 
-import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { Save, User, Shield, Bell } from 'lucide-react'
 
 export default function NastaveniPage() {
-  const { data: session } = useSession()
   const [saved, setSaved] = useState(false)
-
   const save = () => { setSaved(true); setTimeout(() => setSaved(false), 2000) }
 
   return (
@@ -18,7 +15,6 @@ export default function NastaveniPage() {
       </div>
 
       <div className="flex flex-col gap-5">
-        {/* Profil */}
         <div className="bg-white border border-[#e8e6e0] rounded-xl p-5 shadow-sm">
           <div className="flex items-center gap-2 mb-4">
             <User size={16} className="text-[#d4a843]" />
@@ -27,16 +23,15 @@ export default function NastaveniPage() {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="text-[11px] font-semibold text-[#6b6760] uppercase tracking-wide block mb-1.5">Jméno</label>
-              <input defaultValue={session?.user?.name || ''} className="w-full h-10 px-3 bg-[#f9f8f5] border border-[#e8e6e0] rounded-lg text-[13px] outline-none focus:border-[#d4a843]" />
+              <input defaultValue="Jan Baran" className="w-full h-10 px-3 bg-[#f9f8f5] border border-[#e8e6e0] rounded-lg text-[13px] outline-none focus:border-[#d4a843]" />
             </div>
             <div>
               <label className="text-[11px] font-semibold text-[#6b6760] uppercase tracking-wide block mb-1.5">Email</label>
-              <input defaultValue={session?.user?.email || ''} className="w-full h-10 px-3 bg-[#f9f8f5] border border-[#e8e6e0] rounded-lg text-[13px] outline-none focus:border-[#d4a843]" />
+              <input defaultValue="admin@jbagent.cz" className="w-full h-10 px-3 bg-[#f9f8f5] border border-[#e8e6e0] rounded-lg text-[13px] outline-none focus:border-[#d4a843]" />
             </div>
           </div>
         </div>
 
-        {/* Firma */}
         <div className="bg-white border border-[#e8e6e0] rounded-xl p-5 shadow-sm">
           <div className="flex items-center gap-2 mb-4">
             <Shield size={16} className="text-[#d4a843]" />
@@ -52,7 +47,6 @@ export default function NastaveniPage() {
           </div>
         </div>
 
-        {/* Notifikace */}
         <div className="bg-white border border-[#e8e6e0] rounded-xl p-5 shadow-sm">
           <div className="flex items-center gap-2 mb-4">
             <Bell size={16} className="text-[#d4a843]" />
