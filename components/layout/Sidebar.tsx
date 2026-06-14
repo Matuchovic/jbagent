@@ -74,12 +74,15 @@ export default function Sidebar({ userName, userEmail }: { userName?: string; us
             <div className="text-[12px] font-medium text-white/75 truncate">{userName || 'Admin'}</div>
             <div className="text-[10px] text-white/25 truncate">{userEmail}</div>
           </div>
-          <form action="/api/auth/signout" method="POST">
-            <input type="hidden" name="callbackUrl" value="/login" />
-            <button type="submit" className="text-white/20 hover:text-white/60 transition-colors p-1">
-              <LogOut size={14} />
-            </button>
-          </form>
+          <button
+            onClick={async () => {
+              await fetch('/api/auth/signout', { method: 'POST' })
+              window.location.href = '/login'
+            }}
+            className="text-white/20 hover:text-white/60 transition-colors p-1"
+          >
+            <LogOut size={14} />
+          </button>
         </div>
       </div>
     </aside>
