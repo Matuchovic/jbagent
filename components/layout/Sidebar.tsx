@@ -1,4 +1,5 @@
 'use client'
+import { handleSignOut } from '@/app/actions/signout'
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -74,22 +75,11 @@ export default function Sidebar({ userName, userEmail }: { userName?: string; us
             <div className="text-[12px] font-medium text-white/75 truncate">{userName || 'Admin'}</div>
             <div className="text-[10px] text-white/25 truncate">{userEmail}</div>
           </div>
-          <button
-            onClick={async () => {
-              const res = await fetch('/api/auth/signout', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: 'callbackUrl=/login'
-              })
-              document.cookie.split(';').forEach(c => {
-                document.cookie = c.trim().split('=')[0] + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/'
-              })
-              window.location.replace('/login')
-            }}
-            className="text-white/20 hover:text-white/60 transition-colors p-1"
-          >
-            <LogOut size={14} />
-          </button>
+          <form action={handleSignOut}>
+            <button type="submit" className="text-white/20 hover:text-white/60 transition-colors p-1">
+              <LogOut size={14} />
+            </button>
+          </form>
         </div>
       </div>
     </aside>
