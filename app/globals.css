@@ -1,15 +1,11 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --background: #f5f4f0;
   --foreground: #0f0e0c;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-}
+* { box-sizing: border-box; }
+body { background: var(--background); color: var(--foreground); }
