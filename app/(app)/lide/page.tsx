@@ -89,7 +89,7 @@ export default function LidePage() {
   )
 }
 
-function Input({ label, value, onChange, type = 'text', required = false, placeholder = '' }: any) {
+function Input({ label, value, onChange, type = 'text', required = false, placeholder = '' }: { label: string; value: string; onChange: (v: string) => void; type?: string; required?: boolean; placeholder?: string }) {
   return (
     <div>
       <label className="text-[11px] font-semibold text-[#6b6760] uppercase tracking-wide block mb-1.5">{label}</label>
