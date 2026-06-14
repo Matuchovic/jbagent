@@ -15,9 +15,9 @@ export async function GET(req: NextRequest) {
       ...(stav && stav !== 'all' ? { stav: stav as any } : {}),
       ...(search ? {
         OR: [
-          { nazev: { contains: search, mode: 'insensitive' } },
-          { adresa: { contains: search, mode: 'insensitive' } },
-          { zákazník: { jmeno: { contains: search, mode: 'insensitive' } } },
+          { nazev: { contains: search } },
+          { adresa: { contains: search } },
+          { zákazník: { jmeno: { contains: search } } },
         ]
       } : {})
     },
