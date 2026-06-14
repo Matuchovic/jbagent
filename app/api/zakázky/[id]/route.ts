@@ -2,33 +2,25 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { auth } from '@/lib/auth'
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const session = await auth()
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-
+  const { id } = await params
   const zakázka = await prisma.zakázka.findUnique({
-    where: { id: params.id },
-    include: {
-      zákazník: true,
-      pracovnik: { select: { id: true, name: true, phone: true } },
-      faktury: true,
-      fotky: true,
-      dokumenty: true,
-    }
+    where: { id },
+    include: { zákazník: true, pracovnik: { select: { id: true, name: true, phone: true } }, faktury: true, fotky: true, dokumenty: true }
   })
-
   if (!zakázka) return NextResponse.json({ error: 'Not found' }, { status: 404 })
   return NextResponse.json(zakázka)
 }
 
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const session = await auth()
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-
+  const { id } = await params
   const data = await req.json()
-
   const zakázka = await prisma.zakázka.update({
-    where: { id: params.id },
+    where: { id },
     data: {
       ...(data.nazev !== undefined && { nazev: data.nazev }),
       ...(data.popis !== undefined && { popis: data.popis }),
@@ -44,14 +36,13 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     },
     include: { zákazník: true, pracovnik: true, fotky: true, faktury: true, dokumenty: true }
   })
-
   return NextResponse.json(zakázka)
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const session = await auth()
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-
-  await prisma.zakázka.delete({ where: { id: params.id } })
+  const { id } = await params
+  await prisma.zakázka.delete({ where: { id } })
   return NextResponse.json({ success: true })
 }
