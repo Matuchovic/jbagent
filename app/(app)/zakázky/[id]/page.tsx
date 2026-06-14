@@ -228,7 +228,7 @@ export default function ZakazkaDetailPage() {
   )
 }
 
-function Field({ label, value, editing, onChange, type = 'text' }: any) {
+function Field({ label, value, editing, onChange, type = 'text' }: { label: string; value: any; editing: boolean; onChange: (v: string) => void; type?: string }) {
   return (
     <div>
       <div className="text-[10px] font-semibold text-[#a8a49c] uppercase tracking-wide mb-1">{label}</div>
