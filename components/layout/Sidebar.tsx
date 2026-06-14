@@ -76,8 +76,15 @@ export default function Sidebar({ userName, userEmail }: { userName?: string; us
           </div>
           <button
             onClick={async () => {
-              await fetch('/api/auth/signout', { method: 'POST' })
-              window.location.href = '/login'
+              const res = await fetch('/api/auth/signout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'callbackUrl=/login'
+              })
+              document.cookie.split(';').forEach(c => {
+                document.cookie = c.trim().split('=')[0] + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/'
+              })
+              window.location.replace('/login')
             }}
             className="text-white/20 hover:text-white/60 transition-colors p-1"
           >
