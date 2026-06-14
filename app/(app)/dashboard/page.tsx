@@ -8,7 +8,7 @@ export default function DashboardPage() {
   const [zakázky, setZakázky] = useState<any[]>([])
 
   useEffect(() => {
-    fetch('/api/zakázky').then(r => r.json()).then(setZakázky).catch(() => {})
+    fetch('/api/zakazky').then(r => r.json()).then(setZakázky).catch(() => {})
   }, [])
 
   const aktivni = zakázky.filter(z => z.stav === 'PROBIHA').length
@@ -43,7 +43,7 @@ export default function DashboardPage() {
       <div className="bg-white border border-[#e8e6e0] rounded-xl overflow-hidden shadow-sm">
         <div className="px-5 py-4 border-b border-[#f0ede8] flex items-center justify-between">
           <div className="text-[14px] font-bold text-[#0f0e0c]">Aktuálně probíhající práce</div>
-          <Link href="/zakázky" className="text-[12px] font-semibold text-[#d4a843]">Zobrazit vše →</Link>
+          <Link href="/zakazky" className="text-[12px] font-semibold text-[#d4a843]">Zobrazit vše →</Link>
         </div>
         <table className="w-full">
           <thead>

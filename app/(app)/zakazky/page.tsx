@@ -19,7 +19,7 @@ export default function ZakázkyPage() {
   const [search, setSearch] = useState('')
 
   useEffect(() => {
-    fetch('/api/zakázky')
+    fetch('/api/zakazky')
       .then(r => r.json())
       .then(data => { setZakázky(Array.isArray(data) ? data : []); setLoading(false) })
       .catch(() => setLoading(false))
@@ -39,7 +39,7 @@ export default function ZakázkyPage() {
           <h1 className="text-[26px] font-bold text-[#0f0e0c] tracking-tight">Zakázky</h1>
           <p className="text-[14px] text-[#6b6760] mt-1">{zakázky.length} zakázek celkem</p>
         </div>
-        <Link href="/zakázky/nova" className="h-10 px-4 bg-[#0f0e0c] text-white rounded-lg text-[13px] font-semibold flex items-center gap-2 hover:bg-[#1a1916]">
+        <Link href="/zakazky/nova" className="h-10 px-4 bg-[#0f0e0c] text-white rounded-lg text-[13px] font-semibold flex items-center gap-2 hover:bg-[#1a1916]">
           <Plus size={14} /> Nová zakázka
         </Link>
       </div>
@@ -73,7 +73,7 @@ export default function ZakázkyPage() {
                   <tr key={z.id} className="border-b border-[#f7f6f3] last:border-0 hover:bg-[#faf9f7] cursor-pointer">
                     <td className="px-4 py-3 text-[11px] font-semibold text-[#c0bdb6]">{z.cislo}</td>
                     <td className="px-4 py-3">
-                      <Link href={'/zakázky/' + z.id}>
+                      <Link href={'/zakazky/' + z.id}>
                         <div className="text-[13px] font-semibold text-[#0f0e0c]">{z.nazev}</div>
                         <div className="text-[11px] text-[#a8a49c]">{z.adresa}</div>
                       </Link>

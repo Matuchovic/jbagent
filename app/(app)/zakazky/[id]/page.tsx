@@ -18,21 +18,21 @@ export default function ZakazkaDetailPage() {
   const [form, setForm] = useState<any>({})
 
   useEffect(() => {
-    fetch(`/api/zakázky/${id}`).then(r => r.json()).then(d => { setZ(d); setForm(d) })
+    fetch(`/api/zakazky/${id}`).then(r => r.json()).then(d => { setZ(d); setForm(d) })
     fetch('/api/lide').then(r => r.json()).then(setLide)
   }, [id])
 
   const save = async () => {
     setSaving(true)
-    const res = await fetch(`/api/zakázky/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
+    const res = await fetch(`/api/zakazky/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
     if (res.ok) { const d = await res.json(); setZ(d); setForm(d); setEditing(false) }
     setSaving(false)
   }
 
   const del = async () => {
     if (!confirm('Smazat zakázku?')) return
-    await fetch(`/api/zakázky/${id}`, { method: 'DELETE' })
-    router.push('/zakázky')
+    await fetch(`/api/zakazky/${id}`, { method: 'DELETE' })
+    router.push('/zakazky')
   }
 
   if (!z) return <div className="p-6 text-[#a8a49c]">Načítám...</div>
@@ -42,7 +42,7 @@ export default function ZakazkaDetailPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div className="flex items-center gap-4">
-          <Link href="/zakázky" className="text-[#a8a49c] hover:text-[#0f0e0c]"><ArrowLeft size={20} /></Link>
+          <Link href="/zakazky" className="text-[#a8a49c] hover:text-[#0f0e0c]"><ArrowLeft size={20} /></Link>
           <div>
             <div className="text-[11px] font-semibold text-[#d4a843] tracking-[2px] uppercase mb-1">Zakázka #{z.cislo}</div>
             <h1 className="text-[22px] font-bold text-[#0f0e0c]">{z.nazev}</h1>

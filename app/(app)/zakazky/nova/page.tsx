@@ -20,15 +20,15 @@ export default function NovaZakazkaPage() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    const res = await fetch('/api/zakázky', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
-    if (res.ok) { const z = await res.json(); router.push(`/zakázky/${z.id}`) }
+    const res = await fetch('/api/zakazky', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
+    if (res.ok) { const z = await res.json(); router.push(`/zakazky/${z.id}`) }
     else setLoading(false)
   }
 
   return (
     <div className="p-6 max-w-2xl">
       <div className="flex items-center gap-4 mb-6">
-        <Link href="/zakázky" className="text-[#a8a49c] hover:text-[#0f0e0c] transition-colors"><ArrowLeft size={20} /></Link>
+        <Link href="/zakazky" className="text-[#a8a49c] hover:text-[#0f0e0c] transition-colors"><ArrowLeft size={20} /></Link>
         <div>
           <div className="text-[11px] font-semibold text-[#d4a843] tracking-[2px] uppercase mb-1">Nová zakázka</div>
           <h1 className="text-[22px] font-bold text-[#0f0e0c]">Vytvořit zakázku</h1>
@@ -108,7 +108,7 @@ export default function NovaZakazkaPage() {
         </div>
 
         <div className="flex gap-3">
-          <Link href="/zakázky" className="flex-1 h-10 border border-[#e8e6e0] rounded-lg text-[13px] font-medium text-[#6b6760] flex items-center justify-center hover:border-[#d4d0c8] transition-colors">Zrušit</Link>
+          <Link href="/zakazky" className="flex-1 h-10 border border-[#e8e6e0] rounded-lg text-[13px] font-medium text-[#6b6760] flex items-center justify-center hover:border-[#d4d0c8] transition-colors">Zrušit</Link>
           <button type="submit" disabled={loading}
             className="flex-1 h-10 bg-[#0f0e0c] text-white rounded-lg text-[13px] font-semibold flex items-center justify-center gap-2 hover:bg-[#1a1916] transition-colors disabled:opacity-50">
             <Save size={14} /> {loading ? 'Ukládám...' : 'Vytvořit zakázku'}

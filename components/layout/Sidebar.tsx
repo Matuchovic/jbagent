@@ -8,7 +8,7 @@ import { LayoutDashboard, ClipboardList, Users, Receipt, FileText, Home, Package
 const nav = [
   { section: 'Přehled', items: [
     { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { href: '/zakázky', label: 'Zakázky', icon: ClipboardList },
+    { href: '/zakazky', label: 'Zakázky', icon: ClipboardList },
     { href: '/lide', label: 'Lidé', icon: Users },
     { href: '/faktury', label: 'Faktury', icon: Receipt },
   ]},
