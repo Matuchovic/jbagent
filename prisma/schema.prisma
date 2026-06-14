@@ -84,18 +84,48 @@ model Fotka {
 }
 
 model Faktura {
-  id          String        @id @default(cuid())
-  cislo       String        @unique
-  castka      Float
-  dph         Float         @default(21)
-  stav        StavFaktury   @default(NOVA)
-  splatnost   DateTime?
-  zakazkaId   String?
-  userId      String?
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  zakázka     Zakázka?      @relation(fields: [zakazkaId], references: [id])
-  vystavil    User?         @relation(fields: [userId], references: [id])
+  id               String        @id @default(cuid())
+  cislo            String        @unique
+  castka           Float
+  dph              Float         @default(21)
+  stav             StavFaktury   @default(NOVA)
+  datumVystaveni   DateTime      @default(now())
+  splatnost        DateTime?
+  // Dodavatel (firma)
+  dodFirma         String?
+  dodIco           String?
+  dodDic           String?
+  dodAdresa        String?
+  dodUcet          String?
+  dodBanka         String?
+  // Odběratel
+  odbJmeno         String?
+  odbIco           String?
+  odbDic           String?
+  odbAdresa        String?
+  // Platba
+  zpusobPlatby     String?       @default("převodem")
+  variabilniSymbol String?
+  poznamka         String?       @db.Text
+  zakazkaId        String?
+  userId           String?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  zakázka          Zakázka?      @relation(fields: [zakazkaId], references: [id])
+  vystavil         User?         @relation(fields: [userId], references: [id])
+  polozky          FakturaPolozka[]
+}
+
+model FakturaPolozka {
+  id         String   @id @default(cuid())
+  fakturaId  String
+  popis      String
+  mnozstvi   Float    @default(1)
+  jednotka   String   @default("ks")
+  cenaJednotka Float
+  dph        Float    @default(21)
+  createdAt  DateTime @default(now())
+  faktura    Faktura  @relation(fields: [fakturaId], references: [id], onDelete: Cascade)
 }
 
 model Dokument {
