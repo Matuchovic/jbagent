@@ -30,7 +30,17 @@ function PrintView({ f, onClose }: { f: any; onClose: () => void }) {
         <div style={{background:'#0f0e0c',padding:'1rem 1.5rem',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
           <span style={{fontSize:'13px',color:'rgba(255,255,255,0.5)'}}>Náhled faktury</span>
           <div style={{display:'flex',gap:'8px'}}>
-            <button onClick={() => window.print()} style={{height:'34px',padding:'0 14px',background:'#d4a843',color:'#0f0e0c',border:'none',borderRadius:'7px',fontSize:'13px',fontWeight:600,cursor:'pointer',display:'flex',alignItems:'center',gap:'5px'}}>
+            <button onClick={() => {
+              const el = document.getElementById('faktura-nahled')
+              if (!el) return
+              const win = window.open('', '_blank', 'width=900,height=700')
+              if (!win) return
+              win.document.write('<html><head><title>Faktura</title><style>body{margin:0;font-family:system-ui,sans-serif}@media print{.no-print{display:none}}</style></head><body>')
+              win.document.write(el.innerHTML)
+              win.document.write('</body></html>')
+              win.document.close()
+              setTimeout(() => { win.focus(); win.print() }, 500)
+            }} style={{height:'34px',padding:'0 14px',background:'#d4a843',color:'#0f0e0c',border:'none',borderRadius:'7px',fontSize:'13px',fontWeight:600,cursor:'pointer',display:'flex',alignItems:'center',gap:'5px'}}>
               <Printer size={13}/> Tisknout
             </button>
             <button onClick={onClose} style={{height:'34px',width:'34px',background:'rgba(255,255,255,0.07)',color:'rgba(255,255,255,0.5)',border:'none',borderRadius:'7px',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center'}}>
