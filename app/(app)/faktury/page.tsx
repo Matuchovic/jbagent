@@ -25,8 +25,8 @@ function PrintView({ f, onClose }: { f: any; onClose: () => void }) {
   const dphCastka = celkemBezDph * ((f.dph || 21) / 100)
   const celkem = polozky.length > 0 ? celkemBezDph + dphCastka : (f.castka || 0)
   return (
-    <div style={{position:'fixed',inset:'0',background:'rgba(0,0,0,0.75)',zIndex:50,overflowY:'auto',padding:'2rem 1rem'}}>
-      <div style={{background:'white',maxWidth:'760px',margin:'0 auto',borderRadius:'16px',overflow:'hidden'}}>
+    <div id="faktura-overlay" style={{position:'fixed',inset:'0',background:'rgba(0,0,0,0.75)',zIndex:50,overflowY:'auto',padding:'2rem 1rem'}}>
+      <div id="faktura-nahled" style={{background:'white',maxWidth:'760px',margin:'0 auto',borderRadius:'16px',overflow:'hidden'}}>
         <div style={{background:'#0f0e0c',padding:'1rem 1.5rem',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
           <span style={{fontSize:'13px',color:'rgba(255,255,255,0.5)'}}>Náhled faktury</span>
           <div style={{display:'flex',gap:'8px'}}>
