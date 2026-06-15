@@ -159,9 +159,9 @@ export default function FakturyPage() {
   const lbl = 'text-[10px] font-bold text-[#6b6760] uppercase tracking-wide block mb-1'
 
   return (
-    <div className="p-6">
+    <div className="p-4 md:p-6">
       {preview && <PrintView f={preview} onClose={() => setPreview(null)} />}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-start justify-between mb-5 gap-3">
         <div>
           <div className="text-[11px] font-semibold text-[#d4a843] tracking-[2px] uppercase mb-1">Finance</div>
           <h1 className="text-[26px] font-bold text-[#0f0e0c] tracking-tight">Faktury</h1>
@@ -179,7 +179,7 @@ export default function FakturyPage() {
             <button onClick={() => setShowForm(false)} className="text-[#a8a49c] hover:text-[#0f0e0c]"><X size={16}/></button>
           </div>
           <div className="p-5 space-y-5">
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div><label className={lbl}>Stav</label>
                 <select value={form.stav} onChange={e => setForm({...form, stav: e.target.value})} className={inp}>
                   <option value="ODESLANA">Odeslaná</option><option value="ZAPLACENA">Zaplacená</option>
@@ -273,7 +273,7 @@ export default function FakturyPage() {
         </div>
       )}
 
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
         {[{label:'Celkem',value:celkem,color:'text-[#0f0e0c]'},{label:'Zaplaceno',value:zaplaceno,color:'text-green-600'},{label:'Po splatnosti',value:poSplatnosti,color:'text-red-600'}].map(c => (
           <div key={c.label} className="bg-white border border-[#e8e6e0] rounded-xl p-5 shadow-sm">
             <div className="text-[10px] font-semibold text-[#a8a49c] uppercase tracking-wide mb-2">{c.label}</div>
@@ -282,7 +282,7 @@ export default function FakturyPage() {
         ))}
       </div>
 
-      <div className="bg-white border border-[#e8e6e0] rounded-xl shadow-sm overflow-hidden">
+      <div className="bg-white border border-[#e8e6e0] rounded-xl shadow-sm overflow-x-auto">
         {loading ? <div className="py-16 text-center text-[14px] text-[#a8a49c]">Načítám...</div> : (
           <table className="w-full">
             <thead><tr className="bg-[#f9f8f5] border-b border-[#f0ede8]">

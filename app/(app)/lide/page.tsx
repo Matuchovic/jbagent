@@ -17,7 +17,7 @@ export default function LidePage() {
   }, [])
 
   return (
-    <div className="p-6">
+    <div className="p-4 md:p-6">
       <div className="mb-6">
         <div className="text-[11px] font-semibold text-[#d4a843] tracking-[2px] uppercase mb-1">Tým</div>
         <h1 className="text-[26px] font-bold text-[#0f0e0c] tracking-tight">Lidé</h1>
@@ -26,7 +26,7 @@ export default function LidePage() {
       {loading ? (
         <div className="py-16 text-center text-[14px] text-[#a8a49c]">Načítám...</div>
       ) : (
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {lide.map((l: any) => (
             <div key={l.id} className="bg-white border border-[#e8e6e0] rounded-xl p-5 shadow-sm">
               <div className="flex items-center gap-3 mb-3">

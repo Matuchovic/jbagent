@@ -38,8 +38,8 @@ export default function SkladPage() {
   const nizkyStav = sklad.filter(s => s.mnozstvi <= s.minMnozstvi)
 
   return (
-    <div className="p-6">
-      <div className="flex items-center justify-between mb-6">
+    <div className="p-4 md:p-6">
+      <div className="flex items-start justify-between mb-5 gap-3">
         <div>
           <div className="text-[11px] font-semibold text-[#d4a843] tracking-[2px] uppercase mb-1">Logistika</div>
           <h1 className="text-[26px] font-bold text-[#0f0e0c] tracking-tight">Sklad</h1>
@@ -59,7 +59,7 @@ export default function SkladPage() {
             <div className="text-[14px] font-bold text-[#0f0e0c]">Nová položka skladu</div>
             <button onClick={() => setShowForm(false)} className="text-[#a8a49c] hover:text-[#0f0e0c]"><X size={16} /></button>
           </div>
-          <div className="grid grid-cols-2 gap-4 mb-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
             <div className="col-span-2">
               <label className="text-[11px] font-semibold text-[#6b6760] uppercase tracking-wide block mb-1.5">Název *</label>
               <input
@@ -132,7 +132,7 @@ export default function SkladPage() {
         </div>
       )}
 
-      <div className="bg-white border border-[#e8e6e0] rounded-xl shadow-sm overflow-hidden">
+      <div className="bg-white border border-[#e8e6e0] rounded-xl shadow-sm overflow-x-auto">
         {loading ? (
           <div className="py-16 text-center text-[14px] text-[#a8a49c]">Načítám...</div>
         ) : (

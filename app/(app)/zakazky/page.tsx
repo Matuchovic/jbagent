@@ -32,8 +32,8 @@ export default function ZakázkyPage() {
   )
 
   return (
-    <div className="p-6">
-      <div className="flex items-center justify-between mb-6">
+    <div className="p-4 md:p-6">
+      <div className="flex items-start justify-between mb-5 gap-3">
         <div>
           <div className="text-[11px] font-semibold text-[#d4a843] tracking-[2px] uppercase mb-1">Správa</div>
           <h1 className="text-[26px] font-bold text-[#0f0e0c] tracking-tight">Zakázky</h1>
@@ -44,7 +44,7 @@ export default function ZakázkyPage() {
         </Link>
       </div>
 
-      <div className="bg-white border border-[#e8e6e0] rounded-xl shadow-sm overflow-hidden">
+      <div className="bg-white border border-[#e8e6e0] rounded-xl shadow-sm overflow-x-auto">
         <div className="px-5 py-4 border-b border-[#f0ede8] flex items-center gap-3">
           <Search size={15} className="text-[#a8a49c]" />
           <input

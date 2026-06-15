@@ -16,14 +16,14 @@ export default function DashboardPage() {
   const nezaplaceno = zakázky.filter(z => z.stav !== 'ZAPLACENO').reduce((s, z) => s + (z.cena || 0), 0)
 
   return (
-    <div className="p-6">
+    <div className="p-4 md:p-6">
       <div className="mb-6">
         <div className="text-[11px] font-semibold text-[#d4a843] tracking-[2px] uppercase mb-1">Červen 2026</div>
         <h1 className="text-[26px] font-bold text-[#0f0e0c] tracking-tight">Přehled zakázek</h1>
         <p className="text-[14px] text-[#6b6760] mt-1">{zakázky.length} zakázek · {aktivni} aktivních</p>
       </div>
 
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
         {[
           { label: 'Tržby — červen', value: celkemCena.toLocaleString('cs') + ' Kč', color: 'text-[#d4a843]', icon: TrendingUp },
           { label: 'Aktivní zakázky', value: String(aktivni), color: 'text-[#0f0e0c]', icon: ClipboardList },

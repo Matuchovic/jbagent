@@ -15,7 +15,7 @@ export default function ZakaznicPage() {
   }, [])
 
   return (
-    <div className="p-6">
+    <div className="p-4 md:p-6">
       <div className="mb-6">
         <div className="text-[11px] font-semibold text-[#d4a843] tracking-[2px] uppercase mb-1">Databáze</div>
         <h1 className="text-[26px] font-bold text-[#0f0e0c] tracking-tight">Zákazníci</h1>
