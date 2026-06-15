@@ -152,8 +152,6 @@ function AgentIcon({ size = 32 }: { size?: number }) {
       <ellipse cx="84" cy="80" rx="7" ry="8" fill="#1a1612"/>
       <ellipse cx="116" cy="80" rx="7" ry="8" fill="#1a1612"/>
       <path d="M88 100 Q100 110 112 100" stroke="#c0956a" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <rect x="70" y="38" width="60" height="46" rx="18" fill="#0f0e0c"/>
-      <path d="M70 62 Q100 48 130 62" fill="#0f0e0c"/>
     </svg>
   )
 }
