@@ -20,93 +20,116 @@ const emptyForm = () => ({
   polozky: [emptyPolozka()]
 })
 
+
 function PrintView({ f, onClose }: { f: any, onClose: () => void }) {
-  const celkemBezDph = (f.polozky || []).reduce((s: number, p: any) => s + p.mnozstvi * p.cenaJednotka, 0)
-  const dph = celkemBezDph * ((f.dph || 21) / 100)
-  const celkem = celkemBezDph + dph
+  const polozky = f.polozky || []
+  const celkemBezDph = polozky.reduce((s: number, p: any) => s + (p.mnozstvi * p.cenaJednotka), 0)
+  const dphCastka = celkemBezDph * ((f.dph || 21) / 100)
+  const celkem = polozky.length > 0 ? celkemBezDph + dphCastka : (f.castka || 0)
 
   return (
-    <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-auto">
-        <div className="flex items-center justify-between p-4 border-b border-gray-100 print:hidden">
-          <div className="text-[14px] font-bold text-[#0f0e0c]">Náhled faktury {f.cislo}</div>
-          <div className="flex gap-2">
-            <button onClick={() => window.print()} className="h-9 px-4 bg-[#0f0e0c] text-white rounded-lg text-[13px] font-semibold flex items-center gap-2">
-              <Printer size={14} /> Tisknout
+    <div style={{position:'fixed',inset:'0',background:'rgba(0,0,0,0.75)',zIndex:50,overflowY:'auto',padding:'2rem 1rem'}}>
+      <div style={{background:'white',maxWidth:'760px',margin:'0 auto',borderRadius:'16px',overflow:'hidden'}}>
+
+        <div style={{background:'#0f0e0c',padding:'1rem 1.5rem',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+          <span style={{fontSize:'13px',color:'rgba(255,255,255,0.5)'}}>Náhled faktury</span>
+          <div style={{display:'flex',gap:'8px'}}>
+            <button onClick={() => window.print()} style={{height:'34px',padding:'0 14px',background:'#d4a843',color:'#0f0e0c',border:'none',borderRadius:'7px',fontSize:'13px',fontWeight:600,cursor:'pointer',display:'flex',alignItems:'center',gap:'5px'}}>
+              <Printer size={13}/> Tisknout
             </button>
-            <button onClick={onClose} className="h-9 w-9 flex items-center justify-center rounded-lg border border-[#e8e6e0] text-[#a8a49c] hover:text-[#0f0e0c]"><X size={16} /></button>
+            <button onClick={onClose} style={{height:'34px',width:'34px',background:'rgba(255,255,255,0.07)',color:'rgba(255,255,255,0.5)',border:'none',borderRadius:'7px',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center'}}>
+              <X size={15}/>
+            </button>
           </div>
         </div>
-        <div className="p-10 print:p-8" id="faktura-print">
-          <div className="flex items-start justify-between mb-8">
-            <div>
-              <div className="text-[28px] font-bold text-[#0f0e0c] mb-1">FAKTURA</div>
-              <div className="text-[20px] font-semibold text-[#d4a843]">{f.cislo}</div>
-            </div>
-            <div className="text-right text-[12px] text-[#6b6760]">
-              <div>Datum vystavení: <strong>{f.datumVystaveni ? new Date(f.datumVystaveni).toLocaleDateString('cs') : new Date().toLocaleDateString('cs')}</strong></div>
-              {f.splatnost && <div>Datum splatnosti: <strong>{new Date(f.splatnost).toLocaleDateString('cs')}</strong></div>}
-              <div>Způsob platby: <strong>{f.zpusobPlatby || 'převodem'}</strong></div>
-              {f.variabilniSymbol && <div>Variabilní symbol: <strong>{f.variabilniSymbol}</strong></div>}
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-8 mb-8">
-            <div className="border border-[#e8e6e0] rounded-xl p-4">
-              <div className="text-[10px] font-bold text-[#a8a49c] uppercase tracking-wide mb-2">Dodavatel</div>
-              <div className="text-[14px] font-bold text-[#0f0e0c]">{f.dodFirma || 'JB Kominictví s.r.o.'}</div>
-              {f.dodIco && <div className="text-[12px] text-[#6b6760]">IČO: {f.dodIco}</div>}
-              {f.dodDic && <div className="text-[12px] text-[#6b6760]">DIČ: {f.dodDic}</div>}
-              {f.dodAdresa && <div className="text-[12px] text-[#6b6760] mt-1">{f.dodAdresa}</div>}
-              {f.dodUcet && <div className="text-[12px] text-[#6b6760] mt-1">Účet: {f.dodUcet}</div>}
-              {f.dodBanka && <div className="text-[12px] text-[#6b6760]">Banka: {f.dodBanka}</div>}
-            </div>
-            <div className="border border-[#e8e6e0] rounded-xl p-4">
-              <div className="text-[10px] font-bold text-[#a8a49c] uppercase tracking-wide mb-2">Odběratel</div>
-              <div className="text-[14px] font-bold text-[#0f0e0c]">{f.odbJmeno || '—'}</div>
-              {f.odbIco && <div className="text-[12px] text-[#6b6760]">IČO: {f.odbIco}</div>}
-              {f.odbDic && <div className="text-[12px] text-[#6b6760]">DIČ: {f.odbDic}</div>}
-              {f.odbAdresa && <div className="text-[12px] text-[#6b6760] mt-1">{f.odbAdresa}</div>}
+
+        <div style={{background:'#171613',padding:'2rem 2.5rem',display:'flex',justifyContent:'space-between',alignItems:'flex-start',gap:'2rem'}}>
+          <div>
+            <div style={{fontSize:'30px',fontWeight:700,color:'white',letterSpacing:'-0.5px',lineHeight:1}}>FAKTURA</div>
+            <div style={{fontSize:'19px',fontWeight:600,color:'#d4a843',marginTop:'6px'}}>{f.cislo}</div>
+            <div style={{marginTop:'1.25rem',lineHeight:1.9}}>
+              {f.dodFirma && <div style={{fontSize:'13px',fontWeight:600,color:'rgba(255,255,255,0.85)'}}>{f.dodFirma}</div>}
+              {f.dodIco && <div style={{fontSize:'11px',color:'rgba(255,255,255,0.4)'}}>IČO: {f.dodIco}{f.dodDic ? ` · DIČ: ${f.dodDic}` : ''}</div>}
+              {f.dodAdresa && <div style={{fontSize:'11px',color:'rgba(255,255,255,0.4)'}}>{f.dodAdresa}</div>}
+              {f.dodUcet && <div style={{fontSize:'11px',color:'rgba(255,255,255,0.4)'}}>Účet: {f.dodUcet}{f.dodBanka ? ` · ${f.dodBanka}` : ''}</div>}
+              {!f.dodFirma && <div style={{fontSize:'12px',color:'rgba(255,255,255,0.3)'}}>Dodavatel nevyplněn</div>}
             </div>
           </div>
-          <table className="w-full mb-6 border border-[#e8e6e0] rounded-xl overflow-hidden">
+          <div style={{textAlign:'right',lineHeight:2.1,flexShrink:0}}>
+            <div style={{fontSize:'11px',color:'rgba(255,255,255,0.4)'}}>Datum vystavení: <span style={{color:'rgba(255,255,255,0.75)'}}>{f.datumVystaveni ? new Date(f.datumVystaveni).toLocaleDateString('cs') : new Date().toLocaleDateString('cs')}</span></div>
+            {f.splatnost && <div style={{fontSize:'11px',color:'rgba(255,255,255,0.4)'}}>Datum splatnosti: <span style={{color:'#f87171'}}>{new Date(f.splatnost).toLocaleDateString('cs')}</span></div>}
+            <div style={{fontSize:'11px',color:'rgba(255,255,255,0.4)'}}>Způsob platby: <span style={{color:'rgba(255,255,255,0.75)'}}>{f.zpusobPlatby || 'převodem'}</span></div>
+            {f.variabilniSymbol && <div style={{fontSize:'11px',color:'rgba(255,255,255,0.4)'}}>Var. symbol: <span style={{color:'rgba(255,255,255,0.75)'}}>{f.variabilniSymbol}</span></div>}
+          </div>
+        </div>
+
+        <div style={{padding:'1.25rem 2.5rem',background:'#f9f8f5',borderBottom:'1px solid #eeede8'}}>
+          <div style={{fontSize:'10px',fontWeight:600,color:'#a8a49c',letterSpacing:'1.5px',textTransform:'uppercase',marginBottom:'6px'}}>Odběratel</div>
+          <div style={{fontSize:'14px',fontWeight:600,color:'#0f0e0c'}}>{f.odbJmeno || '—'}</div>
+          <div style={{fontSize:'12px',color:'#6b6760',marginTop:'3px',lineHeight:1.7}}>
+            {(f.odbIco || f.odbDic) && <span>IČO: {f.odbIco}{f.odbDic ? ` · DIČ: ${f.odbDic}` : ''}<br/></span>}
+            {f.odbAdresa && <span>{f.odbAdresa}</span>}
+          </div>
+        </div>
+
+        <div style={{padding:'0 2.5rem'}}>
+          <table style={{width:'100%',borderCollapse:'collapse',fontSize:'13px'}}>
             <thead>
-              <tr className="bg-[#f9f8f5]">
-                {['Popis', 'Množství', 'Cena/j', 'DPH', 'Celkem'].map(h => (
-                  <th key={h} className="text-left text-[10px] font-bold text-[#a8a49c] uppercase tracking-wide px-3 py-2">{h}</th>
-                ))}
+              <tr style={{borderBottom:'1px solid #e8e6e0'}}>
+                <th style={{textAlign:'left',padding:'11px 6px 9px',fontSize:'10px',fontWeight:600,color:'#a8a49c',letterSpacing:'1px',textTransform:'uppercase'}}>Popis</th>
+                <th style={{textAlign:'right',padding:'11px 6px 9px',fontSize:'10px',fontWeight:600,color:'#a8a49c',letterSpacing:'1px',textTransform:'uppercase',width:'70px'}}>Množ.</th>
+                <th style={{textAlign:'right',padding:'11px 6px 9px',fontSize:'10px',fontWeight:600,color:'#a8a49c',letterSpacing:'1px',textTransform:'uppercase',width:'100px'}}>Cena/j</th>
+                <th style={{textAlign:'right',padding:'11px 6px 9px',fontSize:'10px',fontWeight:600,color:'#a8a49c',letterSpacing:'1px',textTransform:'uppercase',width:'55px'}}>DPH</th>
+                <th style={{textAlign:'right',padding:'11px 6px 9px',fontSize:'10px',fontWeight:600,color:'#a8a49c',letterSpacing:'1px',textTransform:'uppercase',width:'110px'}}>Celkem</th>
               </tr>
             </thead>
             <tbody>
-              {(f.polozky && f.polozky.length > 0) ? f.polozky.map((p: any, i: number) => (
-                <tr key={i} className="border-t border-[#f0ede8]">
-                  <td className="px-3 py-2 text-[13px] text-[#0f0e0c]">{p.popis}</td>
-                  <td className="px-3 py-2 text-[13px] text-[#6b6760]">{p.mnozstvi} {p.jednotka}</td>
-                  <td className="px-3 py-2 text-[13px] text-[#6b6760]">{p.cenaJednotka?.toLocaleString('cs')} Kč</td>
-                  <td className="px-3 py-2 text-[13px] text-[#6b6760]">{p.dph}%</td>
-                  <td className="px-3 py-2 text-[13px] font-semibold text-[#0f0e0c]">{(p.mnozstvi * p.cenaJednotka)?.toLocaleString('cs')} Kč</td>
+              {polozky.length > 0 ? polozky.map((p: any, i: number) => (
+                <tr key={i} style={{borderBottom:'1px solid #f5f4f1'}}>
+                  <td style={{padding:'11px 6px',color:'#0f0e0c'}}>{p.popis}</td>
+                  <td style={{padding:'11px 6px',textAlign:'right',color:'#6b6760'}}>{p.mnozstvi} {p.jednotka}</td>
+                  <td style={{padding:'11px 6px',textAlign:'right',color:'#6b6760'}}>{Number(p.cenaJednotka).toLocaleString('cs')} Kč</td>
+                  <td style={{padding:'11px 6px',textAlign:'right',color:'#6b6760'}}>{p.dph}%</td>
+                  <td style={{padding:'11px 6px',textAlign:'right',fontWeight:600,color:'#0f0e0c'}}>{(p.mnozstvi * p.cenaJednotka).toLocaleString('cs')} Kč</td>
                 </tr>
               )) : (
-                <tr><td colSpan={5} className="px-3 py-4 text-center text-[13px] text-[#a8a49c]">Bez položek — celkem {f.castka?.toLocaleString('cs')} Kč</td></tr>
+                <tr><td colSpan={5} style={{padding:'2rem',textAlign:'center',color:'#a8a49c',fontSize:'13px'}}>Celkem {(f.castka||0).toLocaleString('cs')} Kč</td></tr>
               )}
             </tbody>
           </table>
-          <div className="flex justify-end mb-6">
-            <div className="w-64">
-              <div className="flex justify-between py-1 text-[13px] text-[#6b6760]"><span>Základ bez DPH</span><span>{celkemBezDph.toLocaleString('cs')} Kč</span></div>
-              <div className="flex justify-between py-1 text-[13px] text-[#6b6760]"><span>DPH {f.dph || 21}%</span><span>{dph.toLocaleString('cs', {maximumFractionDigits: 0})} Kč</span></div>
-              <div className="flex justify-between py-2 border-t border-[#0f0e0c] text-[16px] font-bold text-[#0f0e0c]"><span>Celkem</span><span>{celkem.toLocaleString('cs', {maximumFractionDigits: 0})} Kč</span></div>
+        </div>
+
+        <div style={{display:'flex',justifyContent:'flex-end',padding:'1rem 2.5rem 0'}}>
+          <div style={{width:'270px'}}>
+            {polozky.length > 0 && <>
+              <div style={{display:'flex',justifyContent:'space-between',padding:'5px 0',fontSize:'13px',color:'#6b6760',borderBottom:'1px solid #f0ede8'}}>
+                <span>Základ bez DPH</span><span>{celkemBezDph.toLocaleString('cs')} Kč</span>
+              </div>
+              <div style={{display:'flex',justifyContent:'space-between',padding:'5px 0',fontSize:'13px',color:'#6b6760',borderBottom:'1px solid #f0ede8'}}>
+                <span>DPH {f.dph||21}%</span><span>{Math.round(dphCastka).toLocaleString('cs')} Kč</span>
+              </div>
+            </>}
+            <div style={{display:'flex',justifyContent:'space-between',padding:'10px 0 6px',fontSize:'17px',fontWeight:700,color:'#0f0e0c',borderTop:'2px solid #0f0e0c',marginTop:'4px'}}>
+              <span>Celkem k úhradě</span><span>{Math.round(celkem).toLocaleString('cs')} Kč</span>
             </div>
           </div>
-          {f.poznamka && <div className="border-t border-[#e8e6e0] pt-4 text-[12px] text-[#6b6760]"><strong>Poznámka:</strong> {f.poznamka}</div>}
+        </div>
+
+        {f.poznamka && (
+          <div style={{margin:'1.25rem 2.5rem 0',padding:'0.875rem 1rem',background:'#faf9f7',borderRadius:'8px',borderLeft:'3px solid #d4a843'}}>
+            <div style={{fontSize:'11px',fontWeight:600,color:'#6b6760',marginBottom:'3px'}}>Poznámka</div>
+            <div style={{fontSize:'12px',color:'#6b6760'}}>{f.poznamka}</div>
+          </div>
+        )}
+
+        <div style={{margin:'1.25rem 2.5rem',paddingTop:'1rem',borderTop:'1px solid #f0ede8',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+          <div style={{fontSize:'11px',color:'#a8a49c'}}>Vystavil: {f.vystavil?.name || 'Admin'}</div>
+          <div style={{fontSize:'10px',color:'#d0cdc6',letterSpacing:'1px'}}>JB AGENT · {new Date().getFullYear()}</div>
         </div>
       </div>
     </div>
   )
 }
-
-export default function FakturyPage() {
-  const [faktury, setFaktury] = useState<any[]>([])
-  const [zakazky, setZakazky] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
   const [saving, setSaving] = useState(false)
