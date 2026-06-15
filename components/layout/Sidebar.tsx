@@ -31,12 +31,22 @@ export default function Sidebar({ userName, userEmail }: { userName?: string; us
       <div className="px-4 py-5 border-b border-white/5">
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-[9px] bg-gradient-to-br from-[#1c1508] to-[#080604] border border-[#d4a843]/30 flex items-center justify-center flex-shrink-0">
-              <AgentIcon size={20} />
+            <div className="relative flex items-center justify-center flex-shrink-0">
+              <div className="absolute inset-[-6px] rounded-[14px] border border-[#d4a843]/40 animate-pulse-ring-1" />
+              <div className="absolute inset-[-12px] rounded-[18px] border border-[#d4a843]/15 animate-pulse-ring-2" />
+              <div className="w-9 h-9 rounded-[10px] bg-gradient-to-br from-[#1c1508] to-[#080604] border border-[#d4a843]/50 flex items-center justify-center animate-float overflow-hidden relative">
+                <div className="absolute inset-0 animate-scan-line bg-gradient-to-b from-transparent via-[#d4a843]/30 to-transparent" style={{height:'2px',top:'0'}} />
+                <AgentIcon size={22} />
+              </div>
             </div>
             <div>
-              <div className="text-[13px] font-bold tracking-[2px] bg-gradient-to-r from-[#f5e6b0] to-[#d4a843] bg-clip-text text-transparent">JB AGENT</div>
-              <div className="text-[9px] text-white/20 tracking-[1.5px] uppercase">Software</div>
+              <div className="text-[14px] font-black tracking-[3px] animate-shimmer-gold" style={{background:'linear-gradient(90deg,#8B6914 0%,#d4a843 20%,#f5e6b0 35%,#ffffff 45%,#f5e6b0 55%,#d4a843 70%,#c49030 85%,#f5e6b0 95%,#d4a843 100%)',backgroundSize:'300% auto',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text',animation:'shimmer-gold 4s linear infinite'}}>JB AGENT</div>
+              <div className="flex items-center gap-[4px] mt-[3px]">
+                <span style={{fontSize:'7.5px',fontWeight:700,letterSpacing:'2px',background:'linear-gradient(90deg,rgba(212,168,67,0.3) 0%,rgba(245,230,176,0.9) 40%,rgba(212,168,67,0.9) 60%,rgba(245,230,176,0.9) 80%,rgba(212,168,67,0.3) 100%)',backgroundSize:'200% auto',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text',animation:'shimmer-sub 2.5s linear infinite'}}>SOFTWARE</span>
+                <span style={{color:'rgba(212,168,67,0.4)',fontSize:'7px',WebkitTextFillColor:'rgba(212,168,67,0.4)'}}>·</span>
+                <span style={{fontSize:'7.5px',fontWeight:700,letterSpacing:'1.5px',background:'linear-gradient(90deg,rgba(212,168,67,0.3) 0%,rgba(245,230,176,0.9) 40%,rgba(212,168,67,0.9) 60%,rgba(245,230,176,0.9) 80%,rgba(212,168,67,0.3) 100%)',backgroundSize:'200% auto',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text',animation:'shimmer-sub 2.5s linear infinite 0.8s'}}>AI POWERED</span>
+                <span style={{display:'inline-block',width:'5px',height:'10px',background:'rgba(212,168,67,0.7)',borderRadius:'1px',animation:'type-cursor 1s ease-in-out infinite',marginLeft:'1px'}} />
+              </div>
             </div>
           </div>
           <button onClick={() => setMobileOpen(false)} className="md:hidden text-white/40 hover:text-white/80 p-1">
@@ -97,11 +107,21 @@ export default function Sidebar({ userName, userEmail }: { userName?: string; us
 
       {/* Mobile header */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-[#0f0e0c] border-b border-white/5 flex items-center justify-between px-4 h-14">
-        <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-[8px] bg-gradient-to-br from-[#1c1508] to-[#080604] border border-[#d4a843]/30 flex items-center justify-center">
-            <AgentIcon size={16} />
+        <div className="flex items-center gap-3">
+          <div className="relative flex items-center justify-center">
+            <div className="absolute inset-[-5px] rounded-[12px] border border-[#d4a843]/40" style={{animation:'pulse-ring-1 2.4s ease-in-out infinite'}} />
+            <div className="absolute inset-[-10px] rounded-[15px] border border-[#d4a843]/15" style={{animation:'pulse-ring-2 2.4s ease-in-out infinite 0.3s'}} />
+            <div className="w-8 h-8 rounded-[10px] bg-gradient-to-br from-[#1c1508] to-[#080604] border border-[#d4a843]/50 flex items-center justify-center overflow-hidden relative">
+              <AgentIcon size={18} />
+            </div>
           </div>
-          <div className="text-[13px] font-bold tracking-[2px] bg-gradient-to-r from-[#f5e6b0] to-[#d4a843] bg-clip-text text-transparent">JB AGENT</div>
+          <div>
+            <div className="text-[14px] font-black tracking-[3px]" style={{background:'linear-gradient(90deg,#8B6914 0%,#d4a843 20%,#f5e6b0 35%,#ffffff 45%,#f5e6b0 55%,#d4a843 70%,#c49030 85%,#f5e6b0 95%,#d4a843 100%)',backgroundSize:'300% auto',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text',animation:'shimmer-gold 4s linear infinite'}}>JB AGENT</div>
+            <div className="flex items-center gap-1">
+              <span style={{fontSize:'7px',fontWeight:700,letterSpacing:'1.5px',background:'linear-gradient(90deg,rgba(212,168,67,0.3),rgba(245,230,176,0.9),rgba(212,168,67,0.9),rgba(245,230,176,0.9),rgba(212,168,67,0.3))',backgroundSize:'200% auto',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text',animation:'shimmer-sub 2.5s linear infinite'}}>SOFTWARE · AI POWERED</span>
+              <span style={{display:'inline-block',width:'4px',height:'9px',background:'rgba(212,168,67,0.7)',borderRadius:'1px',animation:'type-cursor 1s ease-in-out infinite'}} />
+            </div>
+          </div>
         </div>
         <button onClick={() => setMobileOpen(true)} className="text-white/60 hover:text-white p-2">
           <Menu size={20} />
