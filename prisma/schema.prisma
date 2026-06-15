@@ -7,12 +7,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Firma {
+  id        String     @id @default(cuid())
+  nazev     String
+  ico       String?
+  dic       String?
+  adresa    String?
+  ucet      String?
+  banka     String?
+  email     String?
+  telefon   String?
+  aktivni   Boolean    @default(true)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  users     User[]
+  zakazky   Zakázka[]
+  faktury   Faktura[]
+  sklad     SkladItem[]
+}
+
 model User {
   id            String     @id @default(cuid())
   name          String?
   email         String     @unique
   emailVerified DateTime?
   password      String?
+  firmaId       String?
+  firma         Firma?    @relation(fields: [firmaId], references: [id])
   role          Role       @default(WORKER)
   phone         String?
   image         String?
@@ -61,6 +82,8 @@ model Zakázka {
   datumZahajeni DateTime?
   datumDokonceni DateTime?
   postup       Int          @default(0)
+  firmaId      String?
+  firma        Firma?    @relation(fields: [firmaId], references: [id])
   zakaznikId   String?
   pracovnikId  String?
   objektId     String?
@@ -109,7 +132,9 @@ model Faktura {
   poznamka         String?       @db.Text
   zakazkaId        String?
   userId           String?
+  firmaId          String?
   createdAt        DateTime      @default(now())
+  firma            Firma?        @relation(fields: [firmaId], references: [id])
   updatedAt        DateTime      @updatedAt
   zakázka          Zakázka?      @relation(fields: [zakazkaId], references: [id])
   vystavil         User?         @relation(fields: [userId], references: [id])
@@ -147,8 +172,10 @@ model SkladItem {
   mnozstvi    Float    @default(0)
   minMnozstvi Float    @default(0)
   cena        Float?
+  firmaId     String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  firma       Firma?   @relation(fields: [firmaId], references: [id])
 }
 
 model Account {
